@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "This script assumes vim is installed and ~/.vim/ exists"
 DOTDIR="$(pwd)"
 VIMRC="$(pwd)/.vimrc"
 TMUXCONF="$(pwd)/.tmux.conf"
@@ -16,7 +17,7 @@ if [ -d "$VUNDLEDIR" ]; then
     cd $DOTDIR
 else
     echo "vundle repo does not exis, cloning git repo"
-    git clone https://github.com/VundleVim/Vundle.vim.git "$VUNDLEDIR"
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 # Installing plugins in .vimrc
 vim +PluginInstall +qall
