@@ -20,7 +20,7 @@ Plugin 'tpope/vim-fugitive'
 " Git plugin not hosted on GitHub
 Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
-Plugin 'file:///home/gmarik/path/to/plugin'
+" Plugin 'file:///home/icmeyer/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
@@ -42,6 +42,9 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'lervag/vimtex'
 Plugin 'AndrewRadev/sideways.vim'
 Plugin 'github/copilot.vim'
+Plugin 'https://github.com/twitvim/twitvim.git'
+Plugin 'vimwiki/vimwiki'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -56,13 +59,14 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+ 
 
+""
+"" LaTeX (rubber) macro
+"nnoremap <leader>c :w<CR>:!pdflatex %<CR>
 "
-" LaTeX (rubber) macro
-nnoremap <leader>c :w<CR>:!pdflatex %<CR>
-
-" View PDF macro; '%:r' is current files root -base- name.
-nnoremap <leader>v :!evince %:r.pdf &<CR><CR>
+"" View PDF macro; '%:r' is current files root -base- name.
+"nnoremap <leader>v :!evince %:r.pdf &<CR><CR>
 
 " " Python: save the file and run script printing results to output
 " nnoremap <leader>p :w<CR>:!python % &> %.o <CR> :!echo ---------------- >> %.o <CR><CR>
@@ -80,7 +84,7 @@ nnoremap <leader>m :w <CR>:! make<CR>
 
 " Clip file handling
 " Write to clip file
-vnoremap <leader>w :'<,'>w! ~/.clip <CR>
+vnoremap <leader>b :'<,'>w! ~/.clip <CR>
 " Read from clip file
 nnoremap <leader>r :r ~/.clip <CR> 
 
@@ -167,3 +171,17 @@ nnoremap Q <nop>
 
 " Yank full line
 nnoremap Y yy
+
+" vimwiki things
+command! Diary VimwikiDiaryIndex
+augroup vimwikigroup
+    autocmd!
+    " automatically update links on read diary
+    autocmd BufRead,BufNewFile diary.wiki VimwikiDiaryGenerateLinks
+augroup end
+
+let wiki = {}
+let wiki.path = '~/vimwiki/'
+let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
+let g:vimwiki_list = [wiki]
+
