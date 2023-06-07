@@ -123,7 +123,7 @@ set statusline+=\ %l:%c
 set statusline+=\ %p%%
 set statusline+=\ 
 "Use ctermbg=None to remove highlight
-hi StatusLine cterm=None ctermfg=172 ctermbg=238
+hi StatusLine cterm=None ctermfg=11 ctermbg=4
 
 "Notes:
 "Use ']p' to paste at same indent level!
@@ -140,6 +140,19 @@ hi StatusLine cterm=None ctermfg=172 ctermbg=238
 "  0 4
 "  0 5
 "
+
+" Template insertion
+" Two part: the plain text from a template
+" Helpful links:
+" https://stackoverflow.com/questions/55469524/how-to-write-vim-function-to-paste-a-template-text-into-current-file
+" https://superuser.com/questions/93492/how-to-add-a-command-in-vim-editor
+" https://stackoverflow.com/questions/690386/writing-a-vim-function-to-insert-a-block-of-static-text 
+" nnoremap <space>t :-1read $HOME/.vim/templates/go/base.go<CR>/{<CR>o
+function! PyPLOT()
+    r~/.vim/templates/python/plotting.py
+    /ax\.
+endfunction
+command Pyplot :call PyPLOT() | :startinsert! " startinsert! enters insert mode at end of line
 
 "Folding
 :set foldmethod=manual
@@ -169,6 +182,9 @@ nnoremap <c-l> :SidewaysRight<cr>
 map q: <Nop>
 nnoremap Q <nop>
 
+" Unset digit incrementing
+nnoremap <c-a> <nop>
+
 " Yank full line
 nnoremap Y yy
 
@@ -181,7 +197,21 @@ augroup vimwikigroup
 augroup end
 
 let wiki = {}
-let wiki.path = '~/vimwiki/'
+let wiki.path = '~/Dropbox (Personal)/vimwiki'
+let wiki.syntax = 'markdown'
 let wiki.nested_syntaxes = {'python': 'python', 'c++': 'cpp'}
 let g:vimwiki_list = [wiki]
+
+set backspace=indent,eol,start
+syntax on
+
+" ctags
+set tags=./tags;,tags;
+
+" Rename tmux window to name of file opened by vim
+" First get window name, if no tmux server do nothing, if custom name do
+" nothing
+" Notes: runs on opening a file, redirects stderr output, concatenate command
+" using `.`
+autocmd BufReadPost,FileReadPost,BufNewFile * call system("mywindow=$(tmux display-message -p '#W' 2> /dev/null); if  [ -z \"$mywindow\" ] || [ $mywindow = \"Vim\" ] || [ $mywindow = \"zsh\" ]; then tmux rename-window " . expand("%") . "; fi;")
 
