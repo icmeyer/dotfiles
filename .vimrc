@@ -100,8 +100,10 @@ set expandtab
 
 
 "Set highlighting for column 80 and above in python
-autocmd filetype python highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-autocmd filetype python match OverLength /\%80v.\+/
+augroup vimrc_autocmds
+      autocmd FileType python highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+      autocmd FileType python match OverLength /\%80v.\+/
+augroup END
 
 "Tagbar
 "Note: use <c-w><c-w> to switch focus to the tagbar
