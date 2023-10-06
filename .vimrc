@@ -44,6 +44,8 @@ Plugin 'AndrewRadev/sideways.vim'
 Plugin 'github/copilot.vim'
 Plugin 'https://github.com/twitvim/twitvim.git'
 Plugin 'vimwiki/vimwiki'
+Plugin 'https://github.com/sk1418/blockit'
+Plugin 'https://github.com/godlygeek/tabular'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -81,6 +83,9 @@ nnoremap <leader>u :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:
 nnoremap <leader>f :w <bar> exec '!g++ '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 "Quick make 
 nnoremap <leader>m :w <CR>:! make<CR>
+
+" Tabularize with spaces
+vnoremap <leader>s :s/\s\+/ /g <bar>Tab /\s<CR>
 
 " Clip file handling
 " Write to clip file
